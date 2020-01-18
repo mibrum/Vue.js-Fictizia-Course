@@ -6,6 +6,7 @@
           <p>Basket:</p>
           <div v-for="(product, index) in productList" :key="index">
             {{product.title}} - Quantity: {{product.quantity}} - Price: {{product.price}} golden Galleons
+            <button @click="addProduct(index)">Add</button><button @click="removeProduct(index)">Remove</button>
           </div>
       </div>
       <div>
@@ -47,6 +48,19 @@ export default {
          })
         return totalPrice;
       }
+  },
+  methods: {
+    addProduct(index){
+      this.productList[index].quantity++
+    },
+    removeProduct(index){
+      if(this.productList[index].quantity > 1){
+        this.productList[index].quantity--;
+      }else{
+        this.productList.splice(this.productList[index], 1)
+      }
+
+    }
   }
 };
 </script>
