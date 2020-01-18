@@ -28,7 +28,7 @@ export default {
             apiKey: '$2a$10$/mQ60IF5cZe7iUGMReRt.eCLASP7wovwIdqK1XO5uLOezMUbx.ZTi',
             houseId: '',
             fetchHouse: '',
-            house: ''
+            house: {}
         }
     },
     watch: {

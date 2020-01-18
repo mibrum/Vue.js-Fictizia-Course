@@ -22,7 +22,8 @@ export default {
     props: {
         house: {
             required: true,
-            type: Array
+            type: Object,
+            default: () => ({})
         }
     }
 };
