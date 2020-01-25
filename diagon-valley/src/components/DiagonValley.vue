@@ -3,22 +3,31 @@
     <h2>Diagon Valley online Store</h2>
     <div class="flex-container">
       <div>
-          <p>Basket:</p>
-          <div v-for="(product, index) in productList" :key="index">
-            {{product.title}} - Quantity: {{product.quantity}} - Price: {{product.price}} golden Galleons
-            <button @click="addProduct(index)">Add</button><button @click="removeProduct(index)">Remove</button>
-          </div>
+        <p>Basket:</p>
+        <div v-for="(product, index) in productList" :key="index">
+          <DiagonItem
+            :product="product"
+            :index="index"
+            @add-product="addProduct"
+            @remove-product="removeProduct"
+            @remove-from-cart="removeFromCart"
+          />
+        </div>
       </div>
       <div>
-          <p>Total: {{totalPrice}} golden Galleons</p>
+        <p>Total: {{totalPrice}} golden Galleons</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import DiagonItem from "@/components/DiagonItem";
 export default {
-
+  name: "DiagonValley",
+  components: {
+    DiagonItem
+  },
   data() {
     return {
       productList: [
@@ -41,25 +50,27 @@ export default {
     };
   },
   computed: {
-      totalPrice({productList}){
-        var totalPrice = "";
-        productList.forEach(product => {
-            totalPrice += product.quantity * product.price
-         })
-        return totalPrice;
-      }
+    totalPrice({ productList }) {
+      var totalPrice = "";
+      productList.forEach(product => {
+        totalPrice += product.quantity * product.price;
+      });
+      return totalPrice;
+    }
   },
   methods: {
-    addProduct(index){
-      this.productList[index].quantity++
+    addProduct(value) {
+      this.productList[value].quantity++;
     },
-    removeProduct(index){
-      if(this.productList[index].quantity > 1){
-        this.productList[index].quantity--;
-      }else{
-        this.productList.splice(this.productList[index], 1)
+    removeProduct(value) {
+      if (this.productList[value].quantity > 1) {
+        this.productList[value].quantity--;
+      } else {
+        this.productList.splice(this.productList[value], 1);
       }
-
+    },
+    removeFromCart(value){
+      this.productList.splice(this.productList[value], 1);
     }
   }
 };
@@ -69,6 +80,6 @@ export default {
 .flex-container {
   display: flex;
   justify-content: space-around;
-  align-items: center
+  align-items: center;
 }
 </style>
