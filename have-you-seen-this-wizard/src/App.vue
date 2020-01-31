@@ -1,16 +1,29 @@
 <template>
   <div id="app">
-    <WizardList/>
+    <WizardHeader @search-text="searchText"/>
+    <WizardList :search="search"/>
   </div>
 </template>
 
 <script>
 import WizardList from "./components/WizardList";
+import WizardHeader from "./components/WizardHeader";
 
 export default {
   name: 'app',
   components: {
-    WizardList
+    WizardList,
+    WizardHeader
+  },
+  data(){
+    return{
+      search: ""
+    }
+  },
+  methods: {
+    searchText(val){
+      this.search = val;
+    }
   }
 }
 </script>
