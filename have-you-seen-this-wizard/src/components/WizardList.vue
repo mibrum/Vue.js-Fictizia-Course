@@ -1,6 +1,8 @@
 <template>
   <div>
     <div style="margin-top: 15px;" v-if="exists">No wizards found for this search.</div>
+    <h2 style="margin-top: 60px;">Add new wizard:</h2>
+    <WizardForm @new-wizard="newWizard"/>
     <div v-for="(wizard, index) in filteredList" :key="index">
       <WizardCard
         :wizard="wizard"
@@ -14,10 +16,12 @@
 
 <script>
 import WizardCard from "./WizardCard";
+import WizardForm from "./WizardForm";
 export default {
   name: "WizardList",
   components: {
-    WizardCard
+    WizardCard,
+    WizardForm
   },
   data: () => ({
     wizardList: [
@@ -39,7 +43,8 @@ export default {
         image: require("../assets/wizard-lucius-malfoy.jpg"),
         status: true
       }
-    ]
+    ],
+    wizard: {}
   }),
   props: {
     search: {
@@ -53,6 +58,10 @@ export default {
     },
     changeWizardStatus(value) {
       this.filteredList[value].status = !this.filteredList[value].status;
+    },
+    newWizard(value){
+        this.wizard = value;
+        this.wizardList.push(value);
     }
   },
   computed: {
