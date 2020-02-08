@@ -4,13 +4,10 @@
     <div class="flex-container">
       <div>
         <p>Basket:</p>
-        <div v-for="(product, index) in productList" :key="index">
+        <div v-for="(product, index) in list" :key="index">
           <DiagonItem
             :product="product"
             :index="index"
-            @add-product="addProduct"
-            @remove-product="removeProduct"
-            @remove-from-cart="removeFromCart"
           />
         </div>
       </div>
@@ -28,49 +25,16 @@ export default {
   components: {
     DiagonItem
   },
-  data() {
-    return {
-      productList: [
-        {
-          title: "Time Turner",
-          quantity: 100,
-          price: 10.5
-        },
-        {
-          title: "Marauder's Map",
-          quantity: 1,
-          price: 100.5
-        },
-        {
-          title: "Sword of Gryffindor",
-          quantity: 5,
-          price: 550
-        }
-      ]
-    };
-  },
   computed: {
-    totalPrice({ productList }) {
+    list(){
+      return this.$store.state.productList;
+    },
+    totalPrice({ list }) {
       var totalPrice = "";
-      productList.forEach(product => {
+      list.forEach(product => {
         totalPrice += product.quantity * product.price;
       });
       return totalPrice;
-    }
-  },
-  methods: {
-    addProduct(value) {
-      this.productList[value].quantity++;
-    },
-    removeProduct(value) {
-      if (this.productList[value].quantity > 1) {
-        this.productList[value].quantity--;
-      } else {
-        this.productList.splice(this.productList[value], 1);
-      }
-    },
-    removeFromCart(value){
-      this.productList.splice(this.productList[value], 1);
     }
   }
 };

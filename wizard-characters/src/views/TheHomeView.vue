@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <input type="text" placeholder="Find wizard..." v-model="text" />
-    <button @click="filterWizards(text)">Search</button>
+    <button @click="inputFiltered(text)">Search</button>
     <div v-for="(wizard, index) in filteredList" :key="index">
       <WizardCard :wizard="wizard" />
     </div>
@@ -12,6 +12,7 @@
 // $route.query.name
 // $route.push({query: {name: "potter"}})
 import WizardCard from "../components/WizardCard";
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: "home",
@@ -20,26 +21,31 @@ export default {
   },
   data() {
     return {
-      wizardList: [],
       filteredList: [],
       text: ""
     };
   },
   methods: {
+    ...mapActions(['getWizards']),
     filterWizards(text) {
-      this.filteredList = this.wizardList.filter(wizard =>
+      this.filteredList = this.wizards.filter(wizard =>
         wizard.name.toLowerCase().includes(text.toLowerCase())
       );
-      
-      this.$router.push({query: {search: text}})
     },
-    getWizards() {
-      return fetch("http://hp-api.herokuapp.com/api/characters")
-        .then(response => response.json())
-        .then(response => {
-          this.wizardList = response;
-          localStorage.setItem("wizards", JSON.stringify(response));
-        });
+    inputFiltered(text){
+      this.filterWizards(text)
+      if(text){
+        this.$router.push({query: {search: search}})
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      wizards: state => state.wizards,
+      search: state => state.search,
+    }),
+    filteredWizards(){
+      return this.$store.getters.filteredWizards(this.text);
     }
   },
   created() {
@@ -47,8 +53,9 @@ export default {
     .then(() => {
       if (this.$route.query.search) {
         this.filterWizards(this.$route.query.search);
-      }else if(!this.$route.query.search){
-        this.filteredList = this.wizardList;
+      }
+      else if(!this.$route.query.search){
+        this.filteredList = this.wizards;
       }
     });
   }

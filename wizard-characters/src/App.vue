@@ -4,6 +4,7 @@
       <the-header/>
       <router-link to="/">Wizard List</router-link> |
       <router-link to="/about">About</router-link> |
+      <router-link to="/favorite">Favorite wizards</router-link> |
       <router-link to="/login">Log in</router-link>
     </div>
     <router-view/>

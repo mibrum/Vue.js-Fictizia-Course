@@ -4,7 +4,7 @@
     <button
       @click="addProduct(index)"
     >Add</button>
-    <button @click="removeProduct(index)">Remove</button>
+    <button @click="removeProduct(index)">Revome</button>
     <button @click="removeFromCart(index)">Remove from cart</button>
   </span>
 </template>
@@ -23,14 +23,14 @@ export default {
         }
     },
     methods: {
-        addProduct(id){
-            this.$emit('add-product', id)
+        addProduct(index){
+            this.$store.dispatch('addProduct', index)
         },
-        removeProduct(id){
-            this.$emit('remove-product', id)
+        removeProduct(index){
+            this.$store.dispatch('removeProduct', index)
         },
-        removeFromCart(id){
-            this.$emit('remove-from-cart', id)
+        removeFromCart(index){
+            this.$store.dispatch('removeFromCart', index)
         }
     }
 };

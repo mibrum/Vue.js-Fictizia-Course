@@ -38,6 +38,11 @@ const routes = [
     path: '/login',
     name: 'loging',
     component: () => import(/* webpackChunkName: "WizardView" */ '../views/TheLoginView.vue')
+  }, 
+  {
+    path: '/favorite',
+    name: 'favorite',
+    component: () => import(/* webpackChunkName: "WizardView" */ '../views/TheFavoriteWizardsView.vue')
   }
 ]
 
